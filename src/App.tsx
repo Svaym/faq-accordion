@@ -1,33 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import './App.scss';
+import image from './assets/images/icon-star.svg';
+import plus from './assets/images/icon-plus.svg';
+import minus from './assets/images/icon-minus.svg';
+import { arr } from './data.ts';
+import { useState } from 'react';
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
+  const [click, setClick] = useState(null);
+  function handleClick(id) {
+    setClick(id === click ? null : id)
+  };
+  return(
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="container">
+        <div className="accordion">
+          <div className='accordion__str'>
+            <img src={image} alt="star" className='accordion__star' />
+            <h1 className='accordion__title'>FAQs</h1>
+          </div>
+            {arr.map((item, id) => (
+              <>
+                <div key={id} className="accordion__btn" onClick={() => handleClick(id)}>
+                  <h2 className='accordion__que'>{item.que}</h2>
+                  {click === id ? <img src={plus} alt="plus" /> : <img src={minus} alt="minus" />}
+                </div>
+                {click === id && <p className='accordion__answer'>{item.answer}</p>}
+              </>
+            ))}
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
